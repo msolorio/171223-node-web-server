@@ -1,26 +1,18 @@
 const express = require('express');
+const hbs = require('hbs');
 
 const app = express();
 
+app.set('view engine', 'hbs');
+
+app.use('/css', express.static(`${__dirname}/public/css`));
+
 app.get('/', (req, res) => {
-  res.send('<h2>home page</h2>');
+  res.render('home.hbs');
 });
 
 app.get('/about', (req, res) => {
-  res.json({
-    companyName: 'Sam\'s Jams',
-    inventory: [
-      {
-        name: 'Strawberry Jam',
-        ammount: 3
-      },
-      {
-        name: 'Grape Jelly',
-        ammount: 2
-      }
-    ],
-    location: '123 Sweet Street'
-  });
+  res.render('about.hbs');
 });
 
 app.get('/notavailable', (req, res) => {
@@ -29,4 +21,6 @@ app.get('/notavailable', (req, res) => {
   });
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log('app listening on port 3000');
+});
