@@ -1,5 +1,9 @@
 body {
   font-family: arial;
-  background: #333377;
-  color: #ffccaa;
+}
+
+.header,
+.footer,
+.welcomeMessage {
+  border: 1px solid blue;
 }

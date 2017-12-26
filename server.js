@@ -2,8 +2,13 @@ const express = require('express');
 const hbs = require('hbs');
 const { PORT } = require('./config');
 const templateData = require('./templateData');
+const logger = require('./middleware/logger');
 
 const app = express();
+
+hbs.registerPartials(`${__dirname}/views/partials`);
+hbs.registerHelper('getCurrentYear', () => new Date().getFullYear());
+hbs.registerHelper('toUpperCase', (text) => text.toUpperCase());
 
 app.set('view engine', 'hbs');
 
@@ -35,6 +40,8 @@ function serveTemplates(pages) {
 }
 
 serveStaticFiles(staticFileTypes);
+
+app.use(logger);
 
 app.get('/', (req, res) => res.render('home', templateData('home')));
 

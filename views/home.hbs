@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <h1>{{pageName}}</h1>
-  <p>{{welcomeMessage}}</p>
-  
-  <footer>{{currentYear}}</footer>
+  {{> header}}
+  <p class="welcomeMessage">{{welcomeMessage}}</p>
+
+  {{> footer}}
 </body>
 </html>

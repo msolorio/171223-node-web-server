@@ -1,19 +1,19 @@
 const toCapitalCase = require('./utils/toCapitalCase');
-const currentYear = new Date().getFullYear();
+const headquarters = 'San Diego';
 
 module.exports = function(pageName) {
   switch(pageName) {
     case 'home':
       return {
-        pageName: 'Sample Haven',
+        pageName: 'Home',
         welcomeMessage: 'Get your samples here',
-        currentYear
+        headquarters
       };
 
     default:
       return {
-        pageName: toCapitalCase(pageName),
-        currentYear
+        pageName: pageName,
+        headquarters
       };
   }
 }
