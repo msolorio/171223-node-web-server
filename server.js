@@ -1,19 +1,58 @@
 const express = require('express');
 const hbs = require('hbs');
+const { PORT } = require('./config');
+const templateData = require('./templateData');
 
 const app = express();
 
 app.set('view engine', 'hbs');
 
-app.use('/css', express.static(`${__dirname}/public/css`));
+const staticFileTypes = [
+  'css',
+  'js',
+  'img'
+];
 
-app.get('/', (req, res) => {
-  res.render('home.hbs');
-});
+const pages = [
+  'about',
+  'bio'
+];
 
-app.get('/about', (req, res) => {
-  res.render('about.hbs');
-});
+// serves static asset by directory name
+function serveStaticFiles(dirNames) {
+  dirNames.forEach((dirName) => {
+    app.use(`/${dirName}`, express.static(`${__dirname}/public/${dirName}`));
+  });
+}
+
+// serves template with matching name from route
+function serveTemplates(pages) {
+  pages.forEach((pageName) => {
+    app.get(`/${pageName}`, (req, res) => {
+      res.render('template', templateData(pageName));
+    });
+  });
+}
+
+serveStaticFiles(staticFileTypes);
+
+app.get('/', (req, res) => res.render('home', templateData('home')));
+
+serveTemplates(pages);
+
+// app.get('/about', (req, res) => {
+//   res.render('about', {
+//     pageTitle: 'About',
+//     currentYear: new Date().getFullYear()
+//   });
+// });
+//
+// app.get('/bio', (req, res) => {
+//   res.render('bio', {
+//     pageTitle: 'Bio',
+//     currentYear: new Date().getFullYear()
+//   });
+// });
 
 app.get('/notavailable', (req, res) => {
   res.status(404).json({
@@ -21,6 +60,6 @@ app.get('/notavailable', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('app listening on port 3000');
+app.listen(PORT, () => {
+  console.log(`Your app is listening on port ${PORT}`);
 });
