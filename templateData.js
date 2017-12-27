@@ -10,6 +10,12 @@ module.exports = function(pageName) {
         headquarters
       };
 
+    case 'maintenance':
+      return {
+        message: 'The site is currently under maintenances.',
+        headquarters
+      };
+
     default:
       return {
         pageName: pageName,

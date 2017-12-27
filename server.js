@@ -3,6 +3,7 @@ const hbs = require('hbs');
 const { PORT } = require('./config');
 const templateData = require('./templateData');
 const logger = require('./middleware/logger');
+const maintenance = require('./middleware/maintenance');
 
 const app = express();
 
@@ -39,33 +40,16 @@ function serveTemplates(pages) {
   });
 }
 
+app.use(logger);
+
 serveStaticFiles(staticFileTypes);
 
-app.use(logger);
+// uncomment to initiate maintenance mode
+// app.use(maintenance);
 
 app.get('/', (req, res) => res.render('home', templateData('home')));
 
 serveTemplates(pages);
-
-// app.get('/about', (req, res) => {
-//   res.render('about', {
-//     pageTitle: 'About',
-//     currentYear: new Date().getFullYear()
-//   });
-// });
-//
-// app.get('/bio', (req, res) => {
-//   res.render('bio', {
-//     pageTitle: 'Bio',
-//     currentYear: new Date().getFullYear()
-//   });
-// });
-
-app.get('/notavailable', (req, res) => {
-  res.status(404).json({
-    errorMessage: 'route not available'
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Your app is listening on port ${PORT}`);

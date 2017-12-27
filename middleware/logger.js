@@ -1,5 +1,13 @@
+const fs = require('fs');
+
 module.exports = function(req, res, next) {
-  const now = new Date().toString();
-  console.log(`\n${now}\nrequest method: ${req.method}\nrequest path: ${req.path}\n`);
+  const date = new Date().toString();
+  const log = `${date}: ${req.method} ${req.path}`;
+  console.log(log);
+
+  fs.appendFile('./logs/server.log', `${log}\n`, (err) => {
+    if (err) console.error('Unable to append to server.log:', err);
+  });
+
   next();
 };
