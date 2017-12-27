@@ -5,7 +5,7 @@ module.exports = function(req, res, next) {
   const log = `${date}: ${req.method} ${req.path}`;
   console.log(log);
 
-  fs.appendFile('./logs/server.log', `${log}\n`, (err) => {
+  fs.appendFile('./server.log', `${log}\n`, (err) => {
     if (err) console.error('Unable to append to server.log:', err);
   });
 
