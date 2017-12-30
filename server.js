@@ -1,6 +1,6 @@
 const express = require('express');
 const hbs = require('hbs');
-const { PORT } = require('./config');
+const { PORT } = require('./const');
 const templateData = require('./templateData');
 const logger = require('./middleware/logger');
 const maintenance = require('./middleware/maintenance');
